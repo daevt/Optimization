@@ -1,12 +1,24 @@
-def read_input("clique.txt"):
-    with open("clique.txt", "r") as f:
-        n = int(f.readline().strip())
-        graph = {}
-        for i in range(n):
-            line = list(map(int, f.readline().strip().split()))
-            graph[i] = set(line[1:])  # Chỉ lưu các đỉnh kề
-    return n, graph
+import time
+
+def read_input():
+    with open("/workspaces/rtewr/Project/clique.txt", "r") as f:
+        n, m = map(int, f.readline().strip().split())
+        # Initialize graph with empty adjacency sets for all vertices
+        graph = {v: set() for v in range(1, n+1)}
+        
+        # Read each edge and add to adjacency sets
+        for _ in range(m):
+            u, v = map(int, f.readline().strip().split())
+            graph[u].add(v)
+            graph[v].add(u)  # Add in both directions for undirected graph
+            
+    return graph
+
 def max_clique_backtrack(graph, current_clique, candidates, max_clique):
+    # Pruning: if current_clique + remaining candidates is less than max_clique, stop
+    if len(current_clique) + len(candidates) <= len(max_clique):
+        return max_clique
+        
     if not candidates:
         if len(current_clique) > len(max_clique):
             max_clique = current_clique.copy()
@@ -25,8 +37,40 @@ def max_clique_backtrack(graph, current_clique, candidates, max_clique):
     max_clique = max_clique_backtrack(graph, current_clique, candidates_copy, max_clique)
     
     return max_clique
+def visualize_graph(graph,max_clique):
+    with open("Project/graph.dot", "w") as f:
+        f.write("graph G {\n")
+        for u in graph:
+            for v in graph[u]:
+                if u < v:
+                    f.write(f"    {u} -- {v};\n")
+        f.write("}\n")
+    
+
+    
+def time_execution(func, *args, **kwargs):
+    """
+    Measure execution time of a function.
+    
+    Args:
+        func: The function to time
+        *args, **kwargs: Arguments to pass to the function
+        
+    Returns:
+        tuple: (function result, execution time in seconds)
+    """
+    start_time = time.time()
+    result = func(*args, **kwargs)
+    end_time = time.time()
+    execution_time = end_time - start_time
+    return result, execution_time
 
 # Gọi hàm ban đầu
-n,graph= read_input()
-max_clique = max_clique_backtrack(graph, [], set(graph.keys()), [])
-print(len(max_clique))
+graph = read_input()
+max_clique, execution_time = time_execution(
+    max_clique_backtrack, graph, [], set(graph.keys()), []
+)
+print(f"Maximum clique size: {len(max_clique)}")
+print(f"Maximum clique: {max_clique}")
+print(f"Execution time: {execution_time:.4f} seconds")
+visualize_graph(graph, max_clique)
