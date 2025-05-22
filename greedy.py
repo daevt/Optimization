@@ -28,23 +28,23 @@ def input_data():
                 if i in willing_reviewers[j]:
                     willing_papers[i] = willing_papers.get(i, []) + [j]
         #print(willing_papers)
-        
     return num_papers, num_reviewers, reviews_per_paper, willing_reviewers, willing_papers
 
 def matching_papers(num_papers, num_reviewers, reviews_per_paper, willing_reviewers):
     load = [0] * (num_reviewers + 1)
     sorted_dict = dict(sorted(willing_reviewers.items(), key=lambda item: len(item[1])))
+    selected_reviewers = {}
     for paper,reviewers in sorted_dict.items():
         #Sort the reviewers by their current load
         reviewers.sort(key=lambda x: load[x])
         # Select the first K reviewers
-        selected_reviewers = reviewers[:reviews_per_paper]
+        selected_reviewers[paper] = reviewers[:reviews_per_paper]
         # Update the load of the selected reviewers
         for reviewer in selected_reviewers:
             load[reviewer] += 1
     # Find the maximum load
     max_load = max(load[1:])
-    return max_load
+    return selected_reviewers
 
 def main():
     num_papers, num_reviewers, reviews_per_paper, willing_reviewers, willing_papers = input_data()
