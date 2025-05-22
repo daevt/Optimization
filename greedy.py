@@ -10,10 +10,10 @@ def time_execution(func):
         return result
     return wrapper
 
-@time_execution
+
 
 def input_data():
-    with open('Project/input.txt', 'r') as f:
+    with open('/workspaces/rtewr/Project/input.txt', 'r') as f:
         num_papers,num_reviewers,reviews_per_paper = map(int, f.readline().strip().split())
         willing_reviewers = {}
         for i in range(num_papers):
@@ -40,12 +40,13 @@ def matching_papers(num_papers, num_reviewers, reviews_per_paper, willing_review
         # Select the first K reviewers
         selected_reviewers[paper] = reviewers[:reviews_per_paper]
         # Update the load of the selected reviewers
-        for reviewer in selected_reviewers:
+        for reviewer in selected_reviewers[paper]:
             load[reviewer] += 1
     # Find the maximum load
     max_load = max(load[1:])
-    return selected_reviewers
+    return max_load, selected_reviewers
 
+@time_execution
 def main():
     num_papers, num_reviewers, reviews_per_paper, willing_reviewers, willing_papers = input_data()
     willing_papers=dict(sorted(willing_papers.items(), key=lambda item: len(item[1])))
@@ -54,7 +55,13 @@ def main():
         min_capactice_max_load=(num_papers*reviews_per_paper) // num_reviewers
     else:
         min_capactice_max_load=(num_papers*reviews_per_paper) // num_reviewers + 1
-    print(matching_papers(num_papers, num_reviewers, reviews_per_paper, willing_reviewers))
+    max_load, selected_reviewers = matching_papers(num_papers, num_reviewers, reviews_per_paper, willing_reviewers)
+    # Print the selected reviewers
+    print(num_papers)
+    for paper, reviewers in selected_reviewers.items():
+        print(f"{reviews_per_paper} {' '.join(map(str, reviewers))}")
+    print(f"Max load: {max_load}")
+
 if __name__ == "__main__":
     main()
     

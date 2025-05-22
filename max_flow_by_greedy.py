@@ -10,7 +10,7 @@ def time_execution(func):
         return result
     return wrapper
 
-@time_execution
+
 def input_data():
     with open('Project/input.txt', 'r') as f:
         num_papers,num_reviewers,reviews_per_paper = map(int, f.readline().strip().split())
@@ -68,7 +68,7 @@ def main():
     gap_flow = {}
     for i in range(len(start_nodes)):
         gap_flow[(start_nodes[i], end_nodes[i])] = capacities[i]
-    
+@time_execution
     # Create the max flow solver
 
 

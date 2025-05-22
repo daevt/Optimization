@@ -1,6 +1,5 @@
 from ortools.graph.python import max_flow
 import time
-
 def time_execution(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
@@ -11,9 +10,8 @@ def time_execution(func):
         return result
     return wrapper
 
-@time_execution
 def input_data():
-    with open('Project/input.txt', 'r') as f:
+    with open('/workspaces/rtewr/Project/input.txt', 'r') as f:
         num_papers,num_reviewers,reviews_per_paper = map(int, f.readline().strip().split())
         willing_reviewers = {}
         for i in range(num_papers):
@@ -51,8 +49,8 @@ def pre_processing_data(num_papers,num_reviewers,reviews_per_paper ,willing_revi
     return start_nodes, end_nodes, capacities
 
 
-
-def main():
+@time_execution
+def main(): 
     # Instantiate a SimpleMaxFlow solver.
     smf = max_flow.SimpleMaxFlow()
 
@@ -84,7 +82,7 @@ def main():
             solution_flows = smf.flows(all_arcs)
             arc_indices = {arc: i for i, arc in enumerate(zip(start_nodes, end_nodes))}
        
-            """for paper in range(1, num_papers + 1):
+            for paper in range(1, num_papers + 1):
                 print(reviews_per_paper, end=' ')
                 assigned_reviewers = []
                 
@@ -99,11 +97,11 @@ def main():
                 # Print assigned reviewers
                 for rev in assigned_reviewers[:reviews_per_paper]:  # Ensure we don't exceed required reviews
                     print(rev, end=' ')
-                print()"""
+                print()
             break
         else:
             max_load += 1
-        
+
        
         
 if __name__ == "__main__":
