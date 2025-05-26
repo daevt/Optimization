@@ -6,7 +6,7 @@ def time_execution(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         execution_time = end_time - start_time
-        print(f"Execution time: {execution_time:.4f} seconds")
+        print(f"{execution_time:.4f}")
         return result
     return wrapper
 
@@ -58,7 +58,7 @@ def main():
     """print(num_papers)
     for paper, reviewers in selected_reviewers.items():
         print(f"{reviews_per_paper} {' '.join(map(str, reviewers))}")"""
-    print(f"Max load: {max_load}")
+    print(f"{max_load}")
 
 if __name__ == "__main__":
     main()

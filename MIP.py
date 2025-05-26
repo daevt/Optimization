@@ -7,7 +7,7 @@ def time_execution(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         execution_time = end_time - start_time
-        print(f"Execution time: {execution_time:.4f} seconds")
+        print(f"{execution_time:.4f}")
         return result
     return wrapper
 
@@ -56,7 +56,7 @@ def main():
 
     # Giải bài toán
     status = solver.Solve()
-    print(f'Status: {status}')
+    print(f'{status}')
     # In kết quả
     if status == pywraplp.Solver.OPTIMAL or status == pywraplp.Solver.FEASIBLE:
         print(max_load.solution_value())

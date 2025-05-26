@@ -117,9 +117,9 @@ def main():
     if final_loads:
         max_load = max(final_loads.values())
         print(f"\nMaximum reviewer load: {max_load}")
-        print("\nReviewer loads:")
+        """print("\nReviewer loads:")
         for reviewer in sorted(final_loads.keys()):
-            print(f"Reviewer {reviewer}: {final_loads[reviewer]} papers")
+            print(f"Reviewer {reviewer}: {final_loads[reviewer]} papers")"""
     else:
         print("No feasible solution found")
 
