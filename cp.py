@@ -12,8 +12,6 @@ def time_execution(func):
     return wrapper
 
 
-
-
 def input_data():
     with open('/workspaces/rtewr/Project/input.txt', 'r') as f:
         num_papers,num_reviewers,reviews_per_paper = map(int, f.readline().strip().split())
@@ -59,23 +57,24 @@ def main()->None:
     status = solver.Solve(model)
     # Print the solution
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
-        print(num_papers)
+        """print(num_papers)
         for paper in range(1, num_papers + 1):
             print(reviews_per_paper, end=' ')
             for reviewer in willing_reviewers[paper]:
                 if solver.Value(x[(paper, reviewer)]) == 1:
                     print(reviewer, end=' ')
-            print()
+            print()"""
+        print(solver.ObjectiveValue())
     else:
         print('No solution found.')
-    # Print statistics
+    """# Print statistics
     print()
     print('Statistics:')
     print(f'  status   : {solver.StatusName(status)}')
     print(f'  conflicts: {solver.NumConflicts()}')
     print(f'  branches : {solver.NumBranches()}')
     print(f'  wall time: {solver.WallTime()} ms')
-    print(f'  load     : {solver.ObjectiveValue()}')
+    print(f'  load     : {solver.ObjectiveValue()}')"""
 if __name__ == "__main__":
     main()
 

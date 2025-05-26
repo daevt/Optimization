@@ -57,9 +57,9 @@ def main():
         min_capactice_max_load=(num_papers*reviews_per_paper) // num_reviewers + 1
     max_load, selected_reviewers = matching_papers(num_papers, num_reviewers, reviews_per_paper, willing_reviewers)
     # Print the selected reviewers
-    print(num_papers)
+    """print(num_papers)
     for paper, reviewers in selected_reviewers.items():
-        print(f"{reviews_per_paper} {' '.join(map(str, reviewers))}")
+        print(f"{reviews_per_paper} {' '.join(map(str, reviewers))}")"""
     print(f"Max load: {max_load}")
 
 if __name__ == "__main__":

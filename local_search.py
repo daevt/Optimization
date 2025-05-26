@@ -106,9 +106,9 @@ def main():
     # Perform local search
     optimized_assignments, final_load = local_search(num_papers, num_reviewers, reviews_per_paper, reviewer_willing_papers, assigned_papers, current_load)
     selected_reviewers=reverse_dict(optimized_assignments)
-    print(num_papers)
+    """print(num_papers)
     for paper, reviewers in selected_reviewers.items():
-        print(f"{reviews_per_paper} {' '.join(map(str, reviewers))}")
+        print(f"{reviews_per_paper} {' '.join(map(str, reviewers))}")"""
     print(f"Max load: {max(final_load.values())}")
     
 if __name__ == "__main__":

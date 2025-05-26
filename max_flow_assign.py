@@ -11,14 +11,17 @@ def time_execution(func):
     return wrapper
 
 def input_data():
-    with open('/workspaces/rtewr/Project/input.txt', 'r') as f:
-        num_papers,num_reviewers,reviews_per_paper = map(int, f.readline().strip().split())
-        willing_reviewers = {}
-        for i in range(num_papers):
-            line = list(map(int, f.readline().strip().split()))
-            paper_id = i+1
-            reviewers = line[1:]
-            willing_reviewers[paper_id] = reviewers
+    # Read first line for parameters
+    num_papers, num_reviewers, reviews_per_paper = map(int, input().strip().split())
+    
+    willing_reviewers = {}
+    # Read paper reviewers data
+    for i in range(num_papers):
+        line = list(map(int, input().strip().split()))
+        paper_id = i+1
+        reviewers = line[1:]  # First element is the number of reviewers, skip it
+        willing_reviewers[paper_id] = reviewers
+    
     return num_papers, num_reviewers, reviews_per_paper, willing_reviewers
 def pre_processing_data(num_papers,num_reviewers,reviews_per_paper ,willing_reviewers,max_load):
     
@@ -47,16 +50,9 @@ def pre_processing_data(num_papers,num_reviewers,reviews_per_paper ,willing_revi
         end_nodes.append(sink)
         capacities.append(max_load)
     return start_nodes, end_nodes, capacities
-def reverse_dict(willing_reviewers):
-    willing_papers = {}
-    for paper, reviewers in willing_reviewers.items():
-        for reviewer in reviewers:
-            if reviewer not in willing_papers:
-                willing_papers[reviewer] = []
-            willing_papers[reviewer].append(paper)
-    return willing_papers
 
-@time_execution
+
+
 def main(): 
     # Instantiate a SimpleMaxFlow solver.
     smf = max_flow.SimpleMaxFlow()
@@ -66,19 +62,17 @@ def main():
 
     #Minimum capactices of max_load
     if (num_papers*reviews_per_paper) % num_reviewers == 0:
-        low=(num_papers*reviews_per_paper) // num_reviewers
+        min_capactice_max_load=(num_papers*reviews_per_paper) // num_reviewers
     else:
-        low=(num_papers*reviews_per_paper) // num_reviewers + 1
+        min_capactice_max_load=(num_papers*reviews_per_paper) // num_reviewers + 1
     
-    willing_papers = reverse_dict(willing_reviewers)
-    willing_papers=dict(sorted(willing_papers.items(), key=lambda item: len(item[1])))
-    high= max(len(papers) for papers in willing_papers.values()) if willing_papers else 0
-        
-    #Dirichlet's theorem
-    max_load= low
 
-    while max_load<=high:        
+    #Dirichlet's theorem
+    max_load= min_capactice_max_load 
+
+    while True:        
         start_nodes, end_nodes, capacities = pre_processing_data(num_papers,num_reviewers,reviews_per_paper ,willing_reviewers,max_load)
+
         #   note: we could have used add_arc_with_capacity(start, end, capacity)
         all_arcs = smf.add_arcs_with_capacity(start_nodes, end_nodes, capacities)
 
@@ -87,7 +81,7 @@ def main():
 
         if (status == smf.OPTIMAL) and smf.optimal_flow()== num_papers * reviews_per_paper:
             # Print the solution
-            """print(num_papers)
+            print(num_papers)
             solution_flows = smf.flows(all_arcs)
             arc_indices = {arc: i for i, arc in enumerate(zip(start_nodes, end_nodes))}
        
@@ -106,8 +100,7 @@ def main():
                 # Print assigned reviewers
                 for rev in assigned_reviewers[:reviews_per_paper]:  # Ensure we don't exceed required reviews
                     print(rev, end=' ')
-                print()"""
-            print(max_load) 
+                print()
             break
         else:
             max_load += 1
