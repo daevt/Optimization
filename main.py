@@ -2,14 +2,14 @@ import subprocess
 
 # List of files to run
 selected_files = [
-    "/workspaces/rtewr/Project/generate.py",
-    "/workspaces/rtewr/Project/greedy.py",
-    "/workspaces/rtewr/Project/local_search.py", 
-    "/workspaces/rtewr/Project/max_flow.py",
-    "/workspaces/rtewr/Project/cp.py",
+    "generate.py",
+    "greedy.py",
+    "local_search.py",
+    "max_flow.py",
+    "cp.py",
     
-    "/workspaces/rtewr/Project/LP.py",
-    "/workspaces/rtewr/Project/MIP.py" # Added local search
+    "LP.py",
+    "MIP.py" # Added local search
    
 ]
 

@@ -10,10 +10,8 @@ def time_execution(func):
         return result
     return wrapper
 
-
-
 def input_data():
-    with open('/workspaces/rtewr/Project/input.txt', 'r') as f:
+    with open('input.txt','r') as f:
         num_papers,num_reviewers,reviews_per_paper = map(int, f.readline().strip().split())
         willing_reviewers = {}
         for i in range(num_papers):

@@ -6,7 +6,7 @@ def generate_test_case():
     K = 5   # Số reviewers mỗi paper cần
     
 
-    with open('/workspaces/rtewr/Project/input.txt', 'w') as f:
+    with open('input.txt', 'w') as f:
         # Dòng đầu: P R K
         f.write(f"{P} {R} {K}\n")
         # Mỗi paper chọn ngẫu nhiên 5 reviewers từ R reviewers
@@ -14,6 +14,5 @@ def generate_test_case():
             nums=random.randint(int(0.2*R),int(0.7*R) )
             reviewers= random.sample(range(1, R+1),nums )
             f.write(f"{nums} {' '.join(map(str, reviewers))}\n")
-
 if __name__ == "__main__":
     generate_test_case()
