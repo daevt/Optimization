@@ -1,5 +1,4 @@
 import time
-import sqlite3
 
 def time_execution(func):
     def wrapper(*args, **kwargs):
@@ -7,10 +6,8 @@ def time_execution(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         execution_time = end_time - start_time
-        wrapper.last_execution_time = execution_time
         print(f"{execution_time:.4f}")
         return result
-    wrapper.last_execution_time = None
     return wrapper
 
 def input_data():
@@ -50,12 +47,12 @@ def matching_papers(num_papers, num_reviewers, reviews_per_paper, willing_review
 @time_execution
 def main():
     num_papers, num_reviewers, reviews_per_paper, willing_reviewers, willing_papers = input_data()
-    willing_papers = dict(sorted(willing_papers.items(), key=lambda item: len(item[1])))
+    willing_papers=dict(sorted(willing_papers.items(), key=lambda item: len(item[1])))
 
-    if (num_papers * reviews_per_paper) % num_reviewers == 0:
-        min_capactice_max_load = (num_papers * reviews_per_paper) // num_reviewers
+    if (num_papers*reviews_per_paper) % num_reviewers == 0:
+        min_capactice_max_load=(num_papers*reviews_per_paper) // num_reviewers
     else:
-        min_capactice_max_load = (num_papers * reviews_per_paper) // num_reviewers + 1
+        min_capactice_max_load=(num_papers*reviews_per_paper) // num_reviewers + 1
     max_load, selected_reviewers = matching_papers(num_papers, num_reviewers, reviews_per_paper, willing_reviewers)
     # Print the selected reviewers
     """print(num_papers)
@@ -63,21 +60,6 @@ def main():
         print(f"{reviews_per_paper} {' '.join(map(str, reviewers))}")"""
     print(f"{max_load}")
 
-    # Write results to SQLite database
-    conn = sqlite3.connect('data.db')
-    cur = conn.cursor()
-    cur.execute('''CREATE TABLE IF NOT EXISTS greedy (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        num_papers INT,
-        num_reviewers INT,
-        reviews_per_paper INT,
-        max_load INT,
-        time_execution FLOAT
-    )''')
-    cur.execute('''INSERT INTO greedy (num_papers, num_reviewers, reviews_per_paper, max_load, time_execution) VALUES (?, ?, ?, ?, ?)''',
-                (num_papers, num_reviewers, reviews_per_paper, max_load, main.last_execution_time))
-    conn.commit()
-    conn.close()
-
 if __name__ == "__main__":
     main()
+    

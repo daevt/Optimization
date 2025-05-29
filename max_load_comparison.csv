@@ -1,0 +1,10 @@
+formatted_params,Constraint Programming,Greedy + Local Search,Greedy Algorithm,Linear Programming + Randomized Rounding,Max Flow Algorithm,Mixed Integer Programming,Best Method,Best Load
+"N=10, M=5, b=2",4.0,4.0,4.0,4.0,4.0,4.0,Constraint Programming,4.0
+"N=100, M=20, b=3",15.0,15.0,16.0,15.0,15.0,15.0,Constraint Programming,15.0
+"N=1000, M=100, b=3",30.0,30.0,31.0,30.0,30.0,30.0,Constraint Programming,30.0
+"N=200, M=30, b=3",20.0,20.0,21.0,20.0,20.0,20.0,Constraint Programming,20.0
+"N=400, M=40, b=3",30.0,30.0,31.0,30.0,30.0,30.0,Constraint Programming,30.0
+"N=5, M=3, b=2",4.0,4.0,4.0,4.0,4.0,4.0,Constraint Programming,4.0
+"N=500, M=40, b=3",38.0,38.0,38.0,39.0,38.0,38.0,Constraint Programming,38.0
+"N=700, M=70, b=3",30.0,30.0,31.0,30.0,30.0,30.0,Constraint Programming,30.0
+"N=900, M=90, b=3",30.0,30.0,31.0,30.0,30.0,30.0,Constraint Programming,30.0
