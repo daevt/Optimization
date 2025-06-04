@@ -64,53 +64,21 @@ def main():
     # Read input data
     num_papers, num_reviewers, reviews_per_paper, willing_reviewers = input_data()
 
-    #Minimum capactices of max_load
-    if (num_papers*reviews_per_paper) % num_reviewers == 0:
-        low=(num_papers*reviews_per_paper) // num_reviewers
+    max_load = 100000000
+    # Pre-process the data to create arcs with capacities
+    start_nodes, end_nodes, capacities = pre_processing_data(num_papers,num_reviewers,reviews_per_paper ,willing_reviewers,max_load)
+    #   note: we could have used add_arc_with_capacity(start, end, capacity)
+    all_arcs = smf.add_arcs_with_capacity(start_nodes, end_nodes, capacities)
+
+     # Find the maximum flow between node 0 and node 4.
+    status = smf.solve(0, num_papers + num_reviewers + 1)
+
+    if (status == smf.OPTIMAL) and smf.optimal_flow()== num_papers * reviews_per_paper:
+        print("Matching is possible")   
     else:
-        low=(num_papers*reviews_per_paper) // num_reviewers + 1
-    
-    willing_papers = reverse_dict(willing_reviewers)
-    willing_papers=dict(sorted(willing_papers.items(), key=lambda item: len(item[1])))
-    high= max(len(papers) for papers in willing_papers.values()) if willing_papers else 0
+        print("Matching is not possible")
+
         
-    #Dirichlet's theorem
-    max_load= low
-
-    while max_load<=high:        
-        start_nodes, end_nodes, capacities = pre_processing_data(num_papers,num_reviewers,reviews_per_paper ,willing_reviewers,max_load)
-        #   note: we could have used add_arc_with_capacity(start, end, capacity)
-        all_arcs = smf.add_arcs_with_capacity(start_nodes, end_nodes, capacities)
-
-        # Find the maximum flow between node 0 and node 4.
-        status = smf.solve(0, num_papers + num_reviewers + 1)
-
-        if (status == smf.OPTIMAL) and smf.optimal_flow()== num_papers * reviews_per_paper:
-            # Print the solution
-            """print(num_papers)
-            solution_flows = smf.flows(all_arcs)
-            arc_indices = {arc: i for i, arc in enumerate(zip(start_nodes, end_nodes))}
-       
-            for paper in range(1, num_papers + 1):
-                print(reviews_per_paper, end=' ')
-                assigned_reviewers = []
-                
-                # Check all arcs from this paper to reviewers
-                for reviewer in willing_reviewers[paper]:
-                    arc = (paper, reviewer + num_papers)
-                    if arc in arc_indices:
-                        flow_index = arc_indices[arc]
-                        if solution_flows[flow_index] == 1:
-                            assigned_reviewers.append(reviewer)
-                
-                # Print assigned reviewers
-                for rev in assigned_reviewers[:reviews_per_paper]:  # Ensure we don't exceed required reviews
-                    print(rev, end=' ')
-                print()"""
-            print(max_load) 
-            break
-        else:
-            max_load += 1
 
        
         
