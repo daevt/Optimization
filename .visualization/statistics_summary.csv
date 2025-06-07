@@ -1,7 +1,0 @@
-Method,Avg Max Load,Min Max Load,Max Max Load,Std Max Load,Avg Exec Time,Min Exec Time,Max Exec Time,Std Exec Time,Test Cases
-Constraint Programming,23.1,4.0,38.0,11.8551,1.4263,0.051,3.241,1.2367,10
-Linear Programming + Randomized Rounding,23.2,4.0,39.0,11.9981,0.9096,0.018,2.426,0.8867,10
-Greedy + Local Search,23.1,4.0,38.0,11.8551,0.0216,0.001,0.07,0.0231,10
-Greedy Algorithm,23.8,4.0,38.0,12.0812,0.0171,0.0,0.045,0.0165,10
-Mixed Integer Programming,23.1,4.0,38.0,11.8551,0.9703,0.025,2.405,0.901,10
-Max Flow Algorithm,23.1,4.0,38.0,11.8551,0.3895,0.316,0.615,0.0984,10

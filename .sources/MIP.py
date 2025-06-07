@@ -56,7 +56,6 @@ def main():
 
     # Giải bài toán
     status = solver.Solve()
-    print(f'{status}')
     # In kết quả
     if status == pywraplp.Solver.OPTIMAL or status == pywraplp.Solver.FEASIBLE:
         print(max_load.solution_value())
