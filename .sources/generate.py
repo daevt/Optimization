@@ -1,9 +1,9 @@
 import random
 
 def generate_test_case():
-    P = 700 # Số papers
-    R = 70 # Số reviewers
-    K = 3  #Số reviewers mỗi paper cần
+    P = 21000 # Số papers
+    R = 700 # Số reviewers
+    K = 111  #Số reviewers mỗi paper cần
     
 
     with open('input.txt', 'w') as f:
